@@ -11,6 +11,7 @@ public class Agent {
 
 	private int numWeightings = 0;
 	
+	
 	public Agent(int numWeightings) {
 		this.numWeightings = numWeightings;
 	}

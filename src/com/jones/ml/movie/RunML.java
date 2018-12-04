@@ -12,8 +12,15 @@ import com.jones.ml.movie.network.*;
  */
 public class RunML {
 	
+	// Custom Params
+	final int numAgents = 20;
+	
+	// Classes
 	private NetworkMap map;
-	private ArrayList<Agent> agents;
+	private AgentFuncs agentF;
+	
+	// Private Params
+	private List<Agent> agents = new ArrayList<>();
 	
 	/**
 	 * @param args
@@ -29,6 +36,9 @@ public class RunML {
 		mapInts.add(3);
 		mapInts.add(1);
 		map = new NetworkMap(mapInts);
+		
+		agentF = new AgentFuncs(map);
+		agents = agentF.createManyAgents(numAgents);
 	}
 
 }

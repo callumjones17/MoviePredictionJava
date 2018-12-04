@@ -18,4 +18,8 @@ public class NetworkMap {
 		return nodes.get(layer);
 	}
 	
+	public List<Integer> getMap(){
+		return nodes;
+	}
+	
 }

@@ -17,6 +17,7 @@ class AgentFuncsUnitTest extends TestCase{
 	private AgentFuncs testClass;
 	private List<Integer> mapI = new ArrayList<>(); 
 	private List<Agent> agentList = new ArrayList<>();
+	private List<Integer> firstLayerMap = new ArrayList<>();
 	private NetworkMap map;
 	
 	@Override
@@ -26,15 +27,47 @@ class AgentFuncsUnitTest extends TestCase{
 	}
 
 	@Test
-	void testCreateAgent() {
+	void testCreateAgent_True() {
+		mapI.clear();
+		mapI.add(5);
+		mapI.add(3);
+		mapI.add(1);
+		firstLayerMap.add(1);
+		firstLayerMap.add(3);
+		firstLayerMap.add(1);
+		map = new NetworkMap(mapI,true,firstLayerMap);
+		
+		testClass = new AgentFuncs(map);
+		if (testClass.createAgent().getNumWeightings() != 8) {
+			System.out.println(testClass.createAgent().getNumWeightings());
+			fail("Incorrect number of weightings!"); // TODO
+		}
+		
+		mapI.clear();
+		mapI.add(5);
+		mapI.add(5);
+		mapI.add(3);
+		mapI.add(2);
+		mapI.add(1);
+		map = new NetworkMap(mapI,true,firstLayerMap);
+		testClass = new AgentFuncs(map);
+		
+		if (testClass.createAgent().getNumWeightings() != 28) {
+			fail("Incorrect number of weightings!"); // TODO
+		}
+	}
+	
+	@Test
+	void testCreateAgent_False() {
 		mapI.clear();
 		mapI.add(5);
 		mapI.add(3);
 		mapI.add(1);
 		map = new NetworkMap(mapI);
 		testClass = new AgentFuncs(map);
-		if (testClass.createAgent().getNumWeightings() != 8) {
-			fail("Not yet implemented"); // TODO
+		if (testClass.createAgent().getNumWeightings() != 18) {
+			System.out.println(testClass.createAgent().getNumWeightings());
+			fail("Incorrect number of weightings!"); // TODO
 		}
 		
 		mapI.clear();
@@ -46,7 +79,7 @@ class AgentFuncsUnitTest extends TestCase{
 		map = new NetworkMap(mapI);
 		testClass = new AgentFuncs(map);
 		
-		if (testClass.createAgent().getNumWeightings() != 28) {
+		if (testClass.createAgent().getNumWeightings() != 48) {
 			fail("Incorrect number of weightings!"); // TODO
 		}
 	}

@@ -29,9 +29,16 @@ public class AgentFuncs {
 		for (Integer layer : map.getMap()) {
 			layerCount++;
 		}
-		weightSum = map.getNodesByLayer(0);
-		for (int i = 1; i < (layerCount-1); i++) {
-			weightSum += map.getNodesByLayer(i) * map.getNodesByLayer(i+1);
+		if (map.getIsFirstLayer1to1()) {
+			weightSum = map.getNodesByLayer(0);
+			for (int i = 1; i < (layerCount-1); i++) {
+				weightSum += map.getNodesByLayer(i) * map.getNodesByLayer(i+1);
+			}
+		}else {
+			weightSum = 0;
+			for (int i = 0; i < (layerCount-1); i++) {
+				weightSum += map.getNodesByLayer(i) * map.getNodesByLayer(i+1);
+			}
 		}
 		//System.out.println(weightSum);
 		return new Agent(weightSum, map);

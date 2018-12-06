@@ -23,6 +23,13 @@ public class Agent {
 			this.weightings.add(random.nextFloat());
 		}
 	}
+	
+	public Agent(int numWeightings) {
+		this.numWeightings = numWeightings;
+		for (int i = 0; i < numWeightings; i++) {
+			this.weightings.add(random.nextFloat());
+		}
+	}
 
 	public int getNumWeightings() {
 		return this.numWeightings;

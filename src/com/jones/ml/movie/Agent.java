@@ -3,6 +3,8 @@
  */
 package com.jones.ml.movie;
 
+import java.util.*;
+
 import com.jones.ml.movie.network.NetworkMap;
 
 /**
@@ -12,17 +14,26 @@ import com.jones.ml.movie.network.NetworkMap;
 public class Agent {
 
 	private int numWeightings = 0;
+	private List<Float> weightings = new ArrayList<>();
+	private Random random = new Random();
 	
 	public Agent(int numWeightings, NetworkMap map) {
 		this.numWeightings = numWeightings;
+		for (int i = 0; i < numWeightings; i++) {
+			this.weightings.add(random.nextFloat());
+		}
 	}
 
 	public int getNumWeightings() {
-		return numWeightings;
+		return this.numWeightings;
 	}
 
 	public void setNumWeightings(int numWeightings) {
 		this.numWeightings = numWeightings;
+	}
+	
+	public List<Float> getWeightings() {
+		return this.weightings;
 	}
 	
 }

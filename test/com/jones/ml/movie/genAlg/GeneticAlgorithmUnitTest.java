@@ -41,6 +41,12 @@ class GeneticAlgorithmUnitTest extends TestCase{
 		
 		assertEquals(expectedBreed,ga.numToBreed(agents, survivors));
 		
+		agents = 4;
+		survivors = 2;
+		expectedBreed = 2;
+		
+		assertNotEquals(expectedBreed,ga.numToBreed(agents, survivors));
+		
 		//fail("Not yet implemented"); // TODO
 	}
 	
@@ -102,6 +108,42 @@ class GeneticAlgorithmUnitTest extends TestCase{
 		agents = ga.selectionProcess(agents, agentScores, 0.4f, 0.6f);
 		
 		assertEquals(expectedAgents,agents);
+	}
+	
+	@Test
+	void testSingleCrossOver() {
+		
+		int newAgents = 2;
+		List<Float> listNums = new ArrayList<>();
+		List<Agent> agents = new ArrayList<>();
+		
+		//Agent 1
+		for (Float i = 0.00f; i < 10; i++) {
+			listNums.add(i);
+		}
+		agents.add(new Agent(listNums));
+		
+		//Agent 2
+		listNums.clear();
+		for (Float i = 0.00f; i < 10; i++) {
+			listNums.add(i+10);
+		}
+		agents.add(new Agent(listNums));
+		
+		agents = ga.singleCrossover(agents, newAgents, 4);
+		
+		//Agent 3
+		listNums.clear();
+		for (Float i = 0.00f; i < 4; i++) {
+			listNums.add(i);
+		}
+		for (Float i = 0.00f; i< 4; i++) {
+			listNums.add(i+15);
+		}
+		
+		assertEquals(new Agent(listNums), agents.get(2));
+		
+		
 	}
 
 }

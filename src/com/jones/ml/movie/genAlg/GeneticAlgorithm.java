@@ -88,16 +88,27 @@ public class GeneticAlgorithm {
 		for (int agIndex = 0; agIndex < numToCreate; agIndex++) {
 			int i = 0;
 			int temp = 0;
-			//agIndex -> (i*2) and (i*2)+1
+
 			for (i = 0; i < slicePoint; i++) {
-				newAgA.add(remAgents.get(agIndex).getWeightings().get(i));
+				newAgA.add(remAgents.get(agIndex*2).getWeightings().get(i));
 			}
 			temp = i;
 			
-			for (i=temp; i < numWeightings ; i++) {
-				newAgB.add(remAgents.get(agIndex).getWeightings().get(i));
+			for (i=temp; i < numWeightings; i++) {
+				newAgB.add(remAgents.get(agIndex*2).getWeightings().get(i));
+			} 
+			
+			i = 0;
+			for (i = 0; i<slicePoint; i++) {
+				newAgB.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
+			}
+			temp = i;
+			for (i = temp; i<numWeightings; i++) {
+				newAgA.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
 			}
 			
+			remAgents.add(new Agent(newAgA));
+			remAgents.add(new Agent(newAgB));
 			
 		}
 		

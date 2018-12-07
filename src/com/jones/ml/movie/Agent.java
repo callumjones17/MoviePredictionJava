@@ -31,6 +31,7 @@ public class Agent {
 		}
 	}
 	
+	// Should only really be used for debugging
 	public Agent(List<Float> weights) {
 		this.numWeightings = weights.size();
 		this.weightings = weights;

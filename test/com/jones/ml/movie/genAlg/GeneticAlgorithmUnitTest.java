@@ -45,6 +45,31 @@ class GeneticAlgorithmUnitTest extends TestCase{
 	}
 	
 	@Test
+	void testSubArray() {
+		
+		System.out.println("Testing SubList");
+		
+		List<Integer> list = new ArrayList<>();
+		List<Integer> subList = new ArrayList<>();
+		
+		list.add(1);
+		list.add(2);
+		list.add(3);
+		list.add(4);
+		System.out.print("Orig: ");
+		System.out.println(list);
+		
+		subList.add(1);
+		subList.add(2);
+		System.out.print("Expected: ");
+		System.out.println(subList);
+		
+		System.out.print("Actual: ");
+		System.out.println(list.subList(0, 2));
+		assertEquals(subList, list.subList(0, 2));
+	}
+	
+	@Test
 	void testSelectionProcess() {
 		
 		System.out.println("Test Selection Process of Agents");

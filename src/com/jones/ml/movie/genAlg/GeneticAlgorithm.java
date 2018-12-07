@@ -39,8 +39,9 @@ public class GeneticAlgorithm {
 		Float normalisedScore = 0.00f;
 		List<Float> normalisedScores = new ArrayList<>();
 		List<Float> accumulatedScores = new ArrayList<>();
+		List<Agent> output = new ArrayList<>();
 		float cutOffPoint = -1.00f;
-		int actualCutPoint = -1;
+		int numKeepAlive = 0;
 		
 		for (Integer score: agentScores) {
 			normalisedScore += score;
@@ -63,15 +64,18 @@ public class GeneticAlgorithm {
 		cutOffPoint = (random.nextFloat()*(maxCutoff-minCutoff)) + minCutoff;
 		
 		for (int i = 0; i < accumulatedScores.size(); i++) {
-			if (accumulatedScores.get(i) > cutOffPoint) {
-				actualCutPoint = i;
+			if (!(accumulatedScores.get(i) > cutOffPoint)) {
+				numKeepAlive += 1;
+			}else {
 				break;
 			}
 		}
+		System.out.println(numKeepAlive);
+		System.out.println(agents.size());
+		output = agents.subList(agents.size()+1-numKeepAlive, 4);
+		System.out.println(output);
 		
-		agents = agents.subList(0, actualCutPoint);
-		
-		return agents;
+		return output;
 	}
 	
 }

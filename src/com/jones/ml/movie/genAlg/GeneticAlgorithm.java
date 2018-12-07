@@ -78,4 +78,31 @@ public class GeneticAlgorithm {
 		return output;
 	}
 	
+	
+	public List<Agent> singleCrossover(List<Agent> remAgents, int numToCreate, int slicePoint){
+		
+		List<Float> newAgA = new ArrayList<>();
+		List<Float> newAgB = new ArrayList<>();
+		int numWeightings = remAgents.get(0).getWeightings().size();
+		
+		for (int agIndex = 0; agIndex < numToCreate; agIndex++) {
+			int i = 0;
+			int temp = 0;
+			//agIndex -> (i*2) and (i*2)+1
+			for (i = 0; i < slicePoint; i++) {
+				newAgA.add(remAgents.get(agIndex).getWeightings().get(i));
+			}
+			temp = i;
+			
+			for (i=temp; i < numWeightings ; i++) {
+				newAgB.add(remAgents.get(agIndex).getWeightings().get(i));
+			}
+			
+			
+		}
+		
+		return remAgents;
+	}
+	
+	
 }

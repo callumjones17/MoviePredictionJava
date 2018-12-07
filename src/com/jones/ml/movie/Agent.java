@@ -30,6 +30,11 @@ public class Agent {
 			this.weightings.add(random.nextFloat());
 		}
 	}
+	
+	public Agent(List<Float> weights) {
+		this.numWeightings = weights.size();
+		this.weightings = weights;
+	}
 
 	public int getNumWeightings() {
 		return this.numWeightings;

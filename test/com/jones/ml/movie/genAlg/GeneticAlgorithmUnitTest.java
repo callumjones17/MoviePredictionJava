@@ -170,5 +170,65 @@ class GeneticAlgorithmUnitTest extends TestCase{
 		
 		
 	}
+	
+	
+	
+	
+	@Test
+	void testSingleCrossOverTest2() {
+		
+		System.out.println("-------------------------");
+		System.out.println("Testing Single Cross Over Test 2");
+		System.out.println("-------------------------");
+		
+		int newAgents = 1;
+		int slicePoint = 4;
+		int expW = 0;
+		List<Float> listNums = new ArrayList<>();
+		List<Agent> agents = new ArrayList<>();
+		
+		//Agent 1
+		for (Float i = 0.00f; i < 10; i++) {
+			listNums.add(i);
+		}
+		agents.add(new Agent(listNums));
+		
+		//Agent 2
+		listNums.clear();
+		for (Float i = 0.00f; i < 10; i++) {
+			listNums.add(i);
+		}
+		agents.add(new Agent(listNums));
+		expW = listNums.size();
+		
+		agents = ga.singleCrossover(agents, newAgents, slicePoint);
+		
+		//Expected Agent (number 3)
+		listNums.clear();
+		for (Float i = 0.00f; i < slicePoint; i++) {
+			listNums.add(i);
+		}
+		for (Float i = 0.00f; i< (expW-slicePoint); i++) {
+			listNums.add(i);
+		}
+	
+		System.out.println(new Agent(listNums).getWeightings());
+		System.out.println(expW);
+		System.out.println(agents.get(0).getWeightings());
+		System.out.println(agents.get(1).getWeightings());
+		System.out.println(agents.get(2).getWeightings());
+		System.out.println(agents.get(3).getWeightings());
+		System.out.println(agents.get(1).getWeightings().size());
+		
+		//NOT SLICING PROPERLY!!!!!!!!!!!!!
+		
+		assertEquals(expW,agents.get(1).getWeightings().size());
+		assertEquals(new Agent(listNums).getWeightings(), agents.get(1).getWeightings());
+		
+		
+		
+	}
+	
+	
 
 }

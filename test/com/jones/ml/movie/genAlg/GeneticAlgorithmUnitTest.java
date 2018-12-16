@@ -27,7 +27,9 @@ class GeneticAlgorithmUnitTest extends TestCase{
 	@Test
 	void testNumToBreed() {
 		
+		System.out.println("-------------------------");
 		System.out.println("Testing num to breed");
+		System.out.println("-------------------------");
 		
 		int agents = 40;
 		int survivors = 15;
@@ -53,7 +55,9 @@ class GeneticAlgorithmUnitTest extends TestCase{
 	@Test
 	void testSubArray() {
 		
+		System.out.println("-------------------------");
 		System.out.println("Testing SubList");
+		System.out.println("-------------------------");
 		
 		List<Integer> list = new ArrayList<>();
 		List<Integer> subList = new ArrayList<>();
@@ -78,7 +82,9 @@ class GeneticAlgorithmUnitTest extends TestCase{
 	@Test
 	void testSelectionProcess() {
 		
+		System.out.println("-------------------------");
 		System.out.println("Test Selection Process of Agents");
+		System.out.println("-------------------------");
 		
 		List<Agent> agents = new ArrayList<>();
 		List<Agent> expectedAgents = new ArrayList<>();
@@ -113,7 +119,13 @@ class GeneticAlgorithmUnitTest extends TestCase{
 	@Test
 	void testSingleCrossOver() {
 		
+		System.out.println("-------------------------");
+		System.out.println("Testing Single Cross Over");
+		System.out.println("-------------------------");
+		
 		int newAgents = 2;
+		int slicePoint = 4;
+		int expW = 0;
 		List<Float> listNums = new ArrayList<>();
 		List<Agent> agents = new ArrayList<>();
 		
@@ -126,22 +138,35 @@ class GeneticAlgorithmUnitTest extends TestCase{
 		//Agent 2
 		listNums.clear();
 		for (Float i = 0.00f; i < 10; i++) {
-			listNums.add(i+10);
+			listNums.add(i);
 		}
 		agents.add(new Agent(listNums));
+		expW = listNums.size();
 		
-		agents = ga.singleCrossover(agents, newAgents, 4);
+		agents = ga.singleCrossover(agents, newAgents, slicePoint);
 		
 		//Agent 3
 		listNums.clear();
-		for (Float i = 0.00f; i < 4; i++) {
+		for (Float i = 0.00f; i < slicePoint; i++) {
 			listNums.add(i);
 		}
-		for (Float i = 0.00f; i< 4; i++) {
-			listNums.add(i+15);
+		for (Float i = 0.00f; i< (expW-slicePoint); i++) {
+			listNums.add(i);
 		}
+	
+		System.out.println(new Agent(listNums).getWeightings());
+		System.out.println(expW);
+		System.out.println(agents.get(0).getWeightings());
+		System.out.println(agents.get(1).getWeightings());
+		System.out.println(agents.get(2).getWeightings());
+		System.out.println(agents.get(3).getWeightings());
+		System.out.println(agents.get(1).getWeightings().size());
 		
-		assertEquals(new Agent(listNums), agents.get(2));
+		//NOT SLICING PROPERLY!!!!!!!!!!!!!
+		
+		assertEquals(expW,agents.get(1).getWeightings().size());
+		assertEquals(new Agent(listNums).getWeightings(), agents.get(1).getWeightings());
+		
 		
 		
 	}

@@ -72,7 +72,9 @@ public class GeneticAlgorithm {
 		}
 		System.out.println(numKeepAlive);
 		System.out.println(agents.size());
-		output = agents.subList(agents.size()+1-numKeepAlive, 4);
+		// THERE is AN ISSUE HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! (Why 4?)
+		//output = agents.subList(agents.size()+1-numKeepAlive, 4);
+		output = agents.subList(agents.size()+1-numKeepAlive, agents.size());
 		System.out.println(output);
 		
 		return output;
@@ -88,27 +90,30 @@ public class GeneticAlgorithm {
 		for (int agIndex = 0; agIndex < numToCreate; agIndex++) {
 			int i = 0;
 			int temp = 0;
+			newAgA = new ArrayList<>();
+			newAgB = new ArrayList<>();
 
 			for (i = 0; i < slicePoint; i++) {
 				newAgA.add(remAgents.get(agIndex*2).getWeightings().get(i));
+				temp = i;
 			}
-			temp = i;
-			
 			for (i=temp; i < numWeightings; i++) {
 				newAgB.add(remAgents.get(agIndex*2).getWeightings().get(i));
 			} 
 			
+			
 			i = 0;
 			for (i = 0; i<slicePoint; i++) {
 				newAgB.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
+				temp = i;
 			}
-			temp = i;
 			for (i = temp; i<numWeightings; i++) {
 				newAgA.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
 			}
 			
 			remAgents.add(new Agent(newAgA));
 			remAgents.add(new Agent(newAgB));
+			
 			
 		}
 		

@@ -87,6 +87,8 @@ public class GeneticAlgorithm {
 		List<Float> newAgB = new ArrayList<>();
 		int numWeightings = remAgents.get(0).getWeightings().size();
 		
+		
+		//Need to do a x4 alg here not x2
 		for (int agIndex = 0; agIndex < numToCreate; agIndex++) {
 			int i = 0;
 			int temp = 0;
@@ -97,7 +99,7 @@ public class GeneticAlgorithm {
 				newAgA.add(remAgents.get(agIndex*2).getWeightings().get(i));
 				temp = i;
 			}
-			for (i=temp; i < numWeightings; i++) {
+			for (i=temp+1; i < numWeightings; i++) {
 				newAgB.add(remAgents.get(agIndex*2).getWeightings().get(i));
 			} 
 			
@@ -107,65 +109,12 @@ public class GeneticAlgorithm {
 				newAgB.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
 				temp = i;
 			}
-			for (i = temp; i<numWeightings; i++) {
+			for (i = temp+1; i<numWeightings; i++) {
 				newAgA.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
 			}
 			
 			remAgents.add(new Agent(newAgA));
 			remAgents.add(new Agent(newAgB));
-			
-			
-		}
-		
-		return remAgents;
-	}
-	
-	
-	
-	
-	
-public List<Agent> singleCrossoverV2(List<Agent> remAgents, int numToCreate, int slicePoint){
-		
-		List<Float> newAgA = new ArrayList<>();
-		List<Float> newAgB = new ArrayList<>();
-		List<Float> newAgC = new ArrayList<>();
-		List<Float> newAgD = new ArrayList<>();
-		int numWeightings = remAgents.get(0).getWeightings().size();
-		
-		for (int agIndex = 0; agIndex < numToCreate; agIndex++) {
-			int i = 0;
-			int temp = 0;
-			newAgA = new ArrayList<>();
-			newAgB = new ArrayList<>();
-			newAgC = new ArrayList<>();
-			newAgD = new ArrayList<>();
-
-			for (i = 0; i < slicePoint; i++) {
-				newAgA.add(remAgents.get(agIndex*2).getWeightings().get(i));
-				newAgC.add(remAgents.get(agIndex*2).getWeightings().get(i));
-				temp = i;
-			}
-			for (i=temp; i < numWeightings; i++) {
-				newAgB.add(remAgents.get(agIndex*2).getWeightings().get(i));
-				newAgD.add(remAgents.get(agIndex*2).getWeightings().get(i));
-			} 
-			
-			
-			i = 0;
-			for (i = 0; i<slicePoint; i++) {
-				newAgB.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
-				newAgC.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
-				temp = i;
-			}
-			for (i = temp; i<numWeightings; i++) {
-				newAgA.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
-				newAgD.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
-			}
-			
-			remAgents.add(new Agent(newAgA));
-			remAgents.add(new Agent(newAgB));
-			remAgents.add(new Agent(newAgC));
-			remAgents.add(new Agent(newAgD));
 			
 			
 		}

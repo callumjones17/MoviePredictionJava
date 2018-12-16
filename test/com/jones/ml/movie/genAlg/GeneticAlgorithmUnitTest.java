@@ -156,16 +156,16 @@ class GeneticAlgorithmUnitTest extends TestCase{
 	
 		System.out.println(new Agent(listNums).getWeightings());
 		System.out.println(expW);
-		System.out.println(agents.get(0).getWeightings());
-		System.out.println(agents.get(1).getWeightings());
 		System.out.println(agents.get(2).getWeightings());
 		System.out.println(agents.get(3).getWeightings());
-		System.out.println(agents.get(1).getWeightings().size());
+		System.out.println(agents.get(4).getWeightings());
+		System.out.println(agents.get(5).getWeightings());
+		System.out.println(agents.get(2).getWeightings().size());
 		
 		//NOT SLICING PROPERLY!!!!!!!!!!!!!
 		
-		assertEquals(expW,agents.get(1).getWeightings().size());
-		assertEquals(new Agent(listNums).getWeightings(), agents.get(1).getWeightings());
+		assertEquals(expW,agents.get(2).getWeightings().size());
+		assertEquals(new Agent(listNums).getWeightings(), agents.get(2).getWeightings());
 		
 		
 		
@@ -181,7 +181,7 @@ class GeneticAlgorithmUnitTest extends TestCase{
 		System.out.println("Testing Single Cross Over Test 2");
 		System.out.println("-------------------------");
 		
-		int newAgents = 1;
+		int newAgents = 2;
 		int slicePoint = 4;
 		int expW = 0;
 		List<Float> listNums = new ArrayList<>();
@@ -214,16 +214,16 @@ class GeneticAlgorithmUnitTest extends TestCase{
 	
 		System.out.println(new Agent(listNums).getWeightings());
 		System.out.println(expW);
-		System.out.println(agents.get(0).getWeightings());
-		System.out.println(agents.get(1).getWeightings());
 		System.out.println(agents.get(2).getWeightings());
 		System.out.println(agents.get(3).getWeightings());
-		System.out.println(agents.get(1).getWeightings().size());
+		System.out.println(agents.get(4).getWeightings());
+		System.out.println(agents.get(5).getWeightings());
+		System.out.println(agents.get(2).getWeightings().size());
 		
 		//NOT SLICING PROPERLY!!!!!!!!!!!!!
 		
-		assertEquals(expW,agents.get(1).getWeightings().size());
-		assertEquals(new Agent(listNums).getWeightings(), agents.get(1).getWeightings());
+		assertEquals(expW,agents.get(2).getWeightings().size());
+		assertEquals(new Agent(listNums).getWeightings(), agents.get(2).getWeightings());
 		
 		
 		

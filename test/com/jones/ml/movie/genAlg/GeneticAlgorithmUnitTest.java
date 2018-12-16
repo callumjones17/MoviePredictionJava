@@ -157,7 +157,7 @@ class GeneticAlgorithmUnitTest extends TestCase{
 		System.out.println(new Agent(listNums).getWeightings());
 		System.out.println(expW);
 		System.out.println(agents.get(2).getWeightings());
-		System.out.println(agents.get(3).getWeightings());
+		System.out.println(agents.get(3).getWeightings());s
 		System.out.println(agents.get(4).getWeightings());
 		System.out.println(agents.get(5).getWeightings());
 		System.out.println(agents.get(2).getWeightings().size());

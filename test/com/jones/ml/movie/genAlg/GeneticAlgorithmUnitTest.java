@@ -126,6 +126,7 @@ class GeneticAlgorithmUnitTest extends TestCase{
 		int newAgents = 2;
 		int slicePoint = 4;
 		int expW = 0;
+		float tempIndex = -1;
 		List<Float> listNums = new ArrayList<>();
 		List<Agent> agents = new ArrayList<>();
 		
@@ -136,35 +137,41 @@ class GeneticAlgorithmUnitTest extends TestCase{
 		agents.add(new Agent(listNums));
 		
 		//Agent 2
-		listNums.clear();
+		listNums = new ArrayList<>();
 		for (Float i = 0.00f; i < 10; i++) {
-			listNums.add(i);
+			listNums.add(10+i);
 		}
 		agents.add(new Agent(listNums));
 		expW = listNums.size();
 		
-		agents = ga.singleCrossover(agents, newAgents, slicePoint);
+		agents = ga.singleCrossover(agents, newAgents, slicePoint, true);
 		
 		//Agent 3
 		listNums.clear();
 		for (Float i = 0.00f; i < slicePoint; i++) {
 			listNums.add(i);
+			tempIndex = i;
 		}
-		for (Float i = 0.00f; i< (expW-slicePoint); i++) {
-			listNums.add(i);
+		for (Float i = tempIndex+1; i< (expW); i++) {
+			listNums.add(10+i);
 		}
+		listNums = listNums.subList(0, expW);
 	
 		System.out.println(new Agent(listNums).getWeightings());
-		System.out.println(expW);
+		//System.out.println(expW);
 		System.out.println(agents.get(2).getWeightings());
 		System.out.println(agents.get(3).getWeightings());
 		System.out.println(agents.get(4).getWeightings());
 		System.out.println(agents.get(5).getWeightings());
-		System.out.println(agents.get(2).getWeightings().size());
+		//System.out.println(agents.get(2).getWeightings().size());
 		
 		//NOT SLICING PROPERLY!!!!!!!!!!!!!
 		
 		assertEquals(expW,agents.get(2).getWeightings().size());
+		assertEquals(expW,agents.get(3).getWeightings().size());
+		assertEquals(expW,agents.get(4).getWeightings().size());
+		assertEquals(expW,agents.get(5).getWeightings().size());
+		assertEquals(6,agents.size());
 		assertEquals(new Agent(listNums).getWeightings(), agents.get(2).getWeightings());
 		
 		
@@ -189,43 +196,49 @@ class GeneticAlgorithmUnitTest extends TestCase{
 		
 		//Agent 1
 		for (Float i = 0.00f; i < 10; i++) {
-			listNums.add(i);
+			listNums.add(1.0f);
 		}
+//		System.out.println(listNums);
 		agents.add(new Agent(listNums));
+//		System.out.println(agents.get(0));
 		
 		//Agent 2
-		listNums.clear();
+		listNums = new ArrayList<>();
 		for (Float i = 0.00f; i < 10; i++) {
-			listNums.add(i);
+			listNums.add(2.0f);
 		}
+//		System.out.println(listNums);
 		agents.add(new Agent(listNums));
+//		System.out.println(agents.get(1));
 		expW = listNums.size();
+		/*System.out.println(agents.get(0).getWeightings());
+		System.out.println(agents.get(1).getWeightings());*/
 		
-		agents = ga.singleCrossover(agents, newAgents, slicePoint);
+		agents = ga.singleCrossover(agents, newAgents, slicePoint, true);
 		
 		//Expected Agent (number 3)
-		listNums.clear();
+		listNums = new ArrayList<>();
 		for (Float i = 0.00f; i < slicePoint; i++) {
-			listNums.add(i);
+			listNums.add(1.0f);
 		}
 		for (Float i = 0.00f; i< (expW-slicePoint); i++) {
-			listNums.add(i);
+			listNums.add(2.0f);
 		}
 	
-		System.out.println(new Agent(listNums).getWeightings());
+		//System.out.println(new Agent(listNums).getWeightings());
 		System.out.println(expW);
+		//System.out.println(agents.get(0).getWeightings());
+		//System.out.println(agents.get(1).getWeightings());
 		System.out.println(agents.get(2).getWeightings());
 		System.out.println(agents.get(3).getWeightings());
 		System.out.println(agents.get(4).getWeightings());
 		System.out.println(agents.get(5).getWeightings());
-		System.out.println(agents.get(2).getWeightings().size());
+		//System.out.println(agents.get(3).getWeightings().size());
 		
 		//NOT SLICING PROPERLY!!!!!!!!!!!!!
 		
 		assertEquals(expW,agents.get(2).getWeightings().size());
 		assertEquals(new Agent(listNums).getWeightings(), agents.get(2).getWeightings());
-		
-		
 		
 	}
 	

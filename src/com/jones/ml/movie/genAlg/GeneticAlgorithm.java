@@ -6,6 +6,7 @@ package com.jones.ml.movie.genAlg;
 import java.util.*;
 import com.jones.ml.movie.*;
 import com.jones.ml.movie.sorting.bubbleSorting;
+import com.jones.ml.error.*;
 
 /**
  * @author Callum Jones
@@ -15,6 +16,7 @@ public class GeneticAlgorithm {
 	
 	private Random random = new Random();
 	private bubbleSorting bs = new bubbleSorting();
+	private ErrorHandler erH = new ErrorHandler();
 
 	public int numToBreed(int numAgents, int numSurv) {
 		
@@ -81,41 +83,74 @@ public class GeneticAlgorithm {
 	}
 	
 	
-	public List<Agent> singleCrossover(List<Agent> remAgents, int numToCreate, int slicePoint){
+	public List<Agent> singleCrossover(List<Agent> remAgents, int numToCreate, int slicePoint, boolean JUnitTest){
 		
 		List<Float> newAgA = new ArrayList<>();
 		List<Float> newAgB = new ArrayList<>();
+		List<Float> newAgC = new ArrayList<>();
+		List<Float> newAgD = new ArrayList<>();
 		int numWeightings = remAgents.get(0).getWeightings().size();
+		int numRemAgents = remAgents.size();
 		
+		if (JUnitTest) {
+			for (Agent agent : remAgents) {
+				if (agent.getNumWeightings() != numWeightings) {
+					erH.passError(ErrorCodes.AGENTS_MUST_BE_SAME_LEN);
+				}
+			}
+		}
 		
-		//Need to do a x4 alg here not x2
-		for (int agIndex = 0; agIndex < numToCreate; agIndex++) {
+		if (numRemAgents < 2*numToCreate && !JUnitTest) {
+			erH.passError(ErrorCodes.NOT_ENOUGH_REM_AGENTS);
+		}
+		
+		if (numToCreate%2 != 0) {
+			numToCreate -= 1;
+		}
+		
+		for (int agIndex = 0; agIndex < numToCreate/2; agIndex+=1) {
 			int i = 0;
 			int temp = 0;
 			newAgA = new ArrayList<>();
 			newAgB = new ArrayList<>();
+			newAgC = new ArrayList<>();
+			newAgD = new ArrayList<>();
 
+			
+			// Please note, this is only half the number of combinations. There are 4 more (they are just opposite)
+			//Agent 1 - Start of 1 	- 	End of 2  		(0-3,14-19) (A)
+			//Agent 2 - Start of 1 	- 	Start of 2 		(0-3,10-17) (B)
+			//Agent 3 - End of 1 	- 	Start of 2		(4-9,10-17) (C)
+			//Agent 4 - End of 1    - 	End of 2		(4-9,14-19) (D)
+			
+			
 			for (i = 0; i < slicePoint; i++) {
 				newAgA.add(remAgents.get(agIndex*2).getWeightings().get(i));
-				temp = i;
-			}
-			for (i=temp+1; i < numWeightings; i++) {
 				newAgB.add(remAgents.get(agIndex*2).getWeightings().get(i));
-			} 
-			
-			
-			i = 0;
-			for (i = 0; i<slicePoint; i++) {
-				newAgB.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
 				temp = i;
 			}
 			for (i = temp+1; i<numWeightings; i++) {
-				newAgA.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
+				newAgC.add(remAgents.get(agIndex*2).getWeightings().get(i));
+				newAgD.add(remAgents.get(agIndex*2).getWeightings().get(i));
 			}
+			
+			for (i = 0; i < (numWeightings-slicePoint); i++) {
+				newAgB.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
+				newAgC.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
+			}
+			for (i = temp+1; i<(numWeightings); i++) {
+				newAgA.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
+				newAgD.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
+			}
+			
+			// C and D are too long
+			newAgC = newAgC.subList(0, numWeightings);
+			newAgD = newAgD.subList(0, numWeightings);			
 			
 			remAgents.add(new Agent(newAgA));
 			remAgents.add(new Agent(newAgB));
-			
+			remAgents.add(new Agent(newAgC));
+			remAgents.add(new Agent(newAgD));
 			
 		}
 		
@@ -126,3 +161,97 @@ public class GeneticAlgorithm {
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*// Agent 1, 2
+for (i = 0; i < slicePoint; i++) {
+	newAgA.add(remAgents.get(agIndex*2).getWeightings().get(i));
+	//newAgC.add(remAgents.get(agIndex*2).getWeightings().get(i));
+	temp = i;
+}
+for (i=temp+1; i < numWeightings; i++) {
+	newAgB.add(remAgents.get(agIndex*2).getWeightings().get(i));
+	//newAgD.add(remAgents.get(agIndex*2).getWeightings().get(i));
+} 
+
+
+i = 0;
+for (i = 0; i<slicePoint; i++) {
+	newAgB.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
+	//newAgC.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
+	temp = i;
+}
+for (i = temp+1; i<numWeightings; i++) {
+	newAgA.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
+	//newAgD.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
+}
+
+
+
+
+
+
+
+
+
+// Agent 3, 4
+for (i = 0; i<slicePoint; i++) {
+	//newAgB.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
+	newAgC.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
+	temp = i;
+}
+for (i = temp+1; i<numWeightings; i++) {
+	//newAgA.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
+	newAgC.add(remAgents.get(agIndex*2).getWeightings().get(i));
+	newAgD.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
+}
+
+
+for (i = 0; i < slicePoint; i++) {
+	//newAgA.add(remAgents.get(agIndex*2).getWeightings().get(i));
+	newAgD.add(remAgents.get(agIndex*2).getWeightings().get(i));
+	temp = i;
+}*/
+
+

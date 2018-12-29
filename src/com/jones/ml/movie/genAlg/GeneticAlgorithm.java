@@ -165,7 +165,7 @@ public class GeneticAlgorithm {
 		// Where L is the length of the Chromosone
 		
 		List<Agent> mutatedAgents = new ArrayList<Agent>();
-		List<Float> listNums = new ArrayList();
+		List<Float> listNums = new ArrayList<>();
 		int numChrom = agents.get(0).getNumWeightings();
 		int index = -1;
 		
@@ -175,7 +175,7 @@ public class GeneticAlgorithm {
 			for (Float chromosone: listNums) {
 				index++;
 				if (random.nextFloat()<(1/numChrom)) {
-					listNums.set(index, 1-listNums.get(index));
+					listNums.set(index, 1-chromosone);
 				}
 			}
 			mutatedAgents.add(new Agent(listNums));

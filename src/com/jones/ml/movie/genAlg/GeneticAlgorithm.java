@@ -166,22 +166,25 @@ public class GeneticAlgorithm {
 		
 		List<Agent> mutatedAgents = new ArrayList<Agent>();
 		List<Float> listNums = new ArrayList<>();
-		int numChrom = agents.get(0).getNumWeightings();
+		Float numChrom = (float) agents.get(0).getNumWeightings();
 		int index = -1;
 		
-		for (Agent agent: agents) {
-			listNums = agent.getWeightings();
-			index = -1;
-			for (Float chromosone: listNums) {
-				index++;
-				if (random.nextFloat()<(1/numChrom)) {
-					listNums.set(index, 1-chromosone);
+		for (int i = 0; i<numRunThroughs; i++) {
+			mutatedAgents = new ArrayList<>();
+			for (Agent agent: agents) {
+				listNums = agent.getWeightings();
+				index = -1;
+				for (Float chromosone: listNums) {
+					index++;
+					if (random.nextFloat()<(1/numChrom)) {
+						listNums.set(index, 1-chromosone);
+					}
 				}
+				mutatedAgents.add(new Agent(listNums));
 			}
-			mutatedAgents.add(new Agent(listNums));
+			agents = mutatedAgents;
 		}
-		
-		return agents;
+		return mutatedAgents;
 	}
 	
 	

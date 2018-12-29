@@ -242,6 +242,35 @@ class GeneticAlgorithmUnitTest extends TestCase{
 		
 	}
 	
+	@Test
+	void testMutateAgents() {
+		
+		System.out.println("-------------------------");
+		System.out.println("Testing Mutation");
+		System.out.println("Please Expect a Fail, Occasionally");
+		System.out.println("-------------------------");
+		
+		List<Agent> agents = new ArrayList<>();
+		List<Agent> mutatedAgents = new ArrayList<>();
+		int num = 5;
+		
+		for (int i = 0; i<num; i++) {
+			agents.add(new Agent(num));
+		}
+		
+		System.out.println(agents.get(0).getWeightings());
+		System.out.println(agents.get(1).getWeightings());
+		
+		mutatedAgents = ga.mutateAgents(agents, num);
+		
+		System.out.println(mutatedAgents.get(0).getWeightings());
+		System.out.println(mutatedAgents.get(1).getWeightings());
+		
+		// Might Fail Sometimes. Just Rerun.
+		assertNotEquals(agents,mutatedAgents);
+		
+	}
+	
 	
 
 }

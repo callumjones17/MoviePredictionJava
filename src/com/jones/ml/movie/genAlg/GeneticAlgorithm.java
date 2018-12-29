@@ -143,7 +143,7 @@ public class GeneticAlgorithm {
 				newAgD.add(remAgents.get((agIndex*2)+1).getWeightings().get(i));
 			}
 			
-			// C and D are too long
+			// C and D are too long - should fix this!!
 			newAgC = newAgC.subList(0, numWeightings);
 			newAgD = newAgD.subList(0, numWeightings);			
 			
@@ -155,6 +155,33 @@ public class GeneticAlgorithm {
 		}
 		
 		return remAgents;
+	}
+	
+	
+	
+	
+	public List<Agent> mutateAgents(List<Agent> agents, int numRunThroughs){
+		// Each Gene, from each Chromosone has a 1/L chance of mutation.
+		// Where L is the length of the Chromosone
+		
+		List<Agent> mutatedAgents = new ArrayList<Agent>();
+		List<Float> listNums = new ArrayList();
+		int numChrom = agents.get(0).getNumWeightings();
+		int index = -1;
+		
+		for (Agent agent: agents) {
+			listNums = agent.getWeightings();
+			index = -1;
+			for (Float chromosone: listNums) {
+				index++;
+				if (random.nextFloat()<(1/numChrom)) {
+					listNums.set(index, 1-listNums.get(index));
+				}
+			}
+			mutatedAgents.add(new Agent(listNums));
+		}
+		
+		return agents;
 	}
 	
 	

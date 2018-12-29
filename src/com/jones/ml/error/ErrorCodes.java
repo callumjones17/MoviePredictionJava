@@ -10,7 +10,7 @@ package com.jones.ml.error;
  */
 public enum ErrorCodes {
 	
-	// Issues with Genetica Alg are between 100 and 200
+	// Issues with Genetic Alg are between 100 and 200
 	NOT_ENOUGH_REM_AGENTS("Not Enough Remaining Agents",100),
 	AGENTS_MUST_BE_SAME_LEN("All Agents must be the same length",101);
 	

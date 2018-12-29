@@ -1,0 +1,4 @@
+Start of 1 	- 	End of 2  		(0-3,14-19)
+Start of 1 	- 	Start of 2 		(0-3,10-15)
+End of 1 	- 	Start of 2		(4-9,10-15)
+End of 1 	- 	End of 2		(4-9,14-19)

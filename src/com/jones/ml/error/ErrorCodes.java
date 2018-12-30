@@ -12,7 +12,10 @@ public enum ErrorCodes {
 	
 	// Issues with Genetic Alg are between 100 and 200
 	NOT_ENOUGH_REM_AGENTS("Not Enough Remaining Agents",100),
-	AGENTS_MUST_BE_SAME_LEN("All Agents must be the same length",101);
+	AGENTS_MUST_BE_SAME_LEN("All Agents must be the same length",101),
+	
+	// Issues with Neural Net are between 200 and 300
+	INSUF_DATA_LAYER_1("Not Enough Data to fill First Layer",200);
 	
 	private String desc;
 	private int code;

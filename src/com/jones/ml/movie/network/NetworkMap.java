@@ -6,7 +6,7 @@ import java.util.List;
 public class NetworkMap {
 
 	private List<Integer> nodes = new ArrayList<>();
-	boolean isFirstLayer1to1 = true; 						// Are all the data points connected to one network map each. False means dynamic
+	private boolean isFirstLayer1to1 = true; 						// Are all the data points connected to one network map each. False means dynamic
 	private List<Integer> firstLayerMap = new ArrayList();
 	
 	public NetworkMap(List<Integer> nodes, boolean isFirstLayer1to1, List<Integer> firstLayerMap) {

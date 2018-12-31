@@ -15,7 +15,8 @@ public enum ErrorCodes {
 	AGENTS_MUST_BE_SAME_LEN("All Agents must be the same length",101),
 	
 	// Issues with Neural Net are between 200 and 300
-	INSUF_DATA_LAYER_1("Not Enough Data to fill First Layer",200);
+	INSUF_DATA_LAYER_1("Not Enough Data to fill First Layer",200),
+	NOT_ENOUGH_WEIGHTINGS("Not Enough Weights for the network Configured!",201);
 	
 	private String desc;
 	private int code;

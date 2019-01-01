@@ -40,6 +40,23 @@ public class NetworkMap {
 		this.customRoutingMap = routingMap;
 	}
 	
+	public int calculateNumberOfWeightingsRequired() {
+		
+		int weCount = 0;
+		
+		if (!this.isFirstLayer1to1 & !this.customRouting) {
+			
+			for (int layer = 1; layer < this.getMap().size(); layer++) {
+				
+				weCount += this.getNodesByLayer(layer-1) * this.getNodesByLayer(layer);
+				
+			}
+			
+		}
+		
+		return weCount;
+	}
+	
 	public Integer getNodesByLayer(Integer layer) {
 		if (nodes.size() <= layer) {
 			return -1;

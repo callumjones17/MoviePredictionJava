@@ -101,7 +101,9 @@ public class NeuralNet {
 			return layers.get(layers.size()-1);
 		}else {
 			
-			// Custom Routing of Nodes
+			if (networkMap.getMap().size() != networkMap.getRoutingMap().size()-1) { erH.passError(ErrorCodes.CUSTOM_ROUTES_NOT_EQUAL_TO_NUM_LAYERS);}
+			
+			// Custom Routing of Nodes - Fully Custom
 			
 			for (int cLayer = 1; cLayer < networkMap.getMap().size(); cLayer++) {
 
@@ -131,12 +133,11 @@ public class NeuralNet {
 				
 				layers.add(layerX);		
 
-			}
-			
-			
-			
-			
+			}			
 		}
+		
+		if (dataIndex != agent.getWeightings().size()) { erH.passError(ErrorCodes.DATA_INDEX_NOT_EQUAL_TO_AGENT);}
+		return layers.get(layers.size()-1);
 	}
 	
 	

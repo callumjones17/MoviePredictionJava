@@ -1,24 +1,43 @@
 package com.jones.ml.movie.network;
 
+//import com.jones.ml.error.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class NetworkMap {
 
+	//private ErrorHandler erH = new ErrorHandler();
+	
 	private List<Integer> nodes = new ArrayList<>();
 	private boolean isFirstLayer1to1 = true; 						// Are all the data points connected to one network map each. False means dynamic
 	private List<Integer> firstLayerMap = new ArrayList();
+	
+	private boolean customRouting = false;
+	private List<List<Integer>> customRoutingMap = new ArrayList<>();
 	
 	public NetworkMap(List<Integer> nodes, boolean isFirstLayer1to1, List<Integer> firstLayerMap) {
 		this.isFirstLayer1to1 = isFirstLayer1to1;
 		this.nodes = nodes;
 		this.firstLayerMap = firstLayerMap;
+		this.customRouting = false;
+		this.customRoutingMap = null;
 	}
 	
 	public NetworkMap(List<Integer> nodes) {
 		this.nodes = nodes;
 		this.isFirstLayer1to1 = false;
 		this.firstLayerMap = null;
+		this.customRouting = false;
+		this.customRoutingMap = null;
+	}
+	
+	public NetworkMap(List<Integer> nodeMap, boolean isFirstLayer1to1, List<Integer> firstLayerMap, boolean customRouting, List<List<Integer>> routingMap) {
+		this.nodes = nodeMap;
+		this.isFirstLayer1to1 = isFirstLayer1to1;
+		this.firstLayerMap = firstLayerMap;
+		this.customRouting = customRouting;
+		this.customRoutingMap = routingMap;
 	}
 	
 	public Integer getNodesByLayer(Integer layer) {
@@ -38,6 +57,14 @@ public class NetworkMap {
 	
 	public List<Integer> getFirstLayerMap(){
 		return firstLayerMap;
+	}
+	
+	public boolean getIsCustomRouting() {
+		return customRouting;
+	}
+	
+	public List<List<Integer>> getRoutingMap(){
+		return customRoutingMap;
 	}
 	
 }

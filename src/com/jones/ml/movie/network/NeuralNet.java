@@ -18,7 +18,6 @@ public class NeuralNet {
 	public List<Float> runThroughNetworkOnce(Agent agent, List<Float>data, NetworkMap networkMap) {
 		
 		List<List<Float>> layers = new ArrayList<>();
-		int numLayer1Nodes = -1;
 		int numCurrentLayerNodes = -1;
 		int numPrevLayerNodes = -1;
 		int dataIndex = 0;
@@ -39,7 +38,6 @@ public class NeuralNet {
 			}
 			
 			layers.add(layerOne);
-			numLayer1Nodes = layerOne.size();
 			
 		}else {
 			
@@ -67,39 +65,49 @@ public class NeuralNet {
 				layerOne.add(fireNode(sum,node));
 			}
 			layers.add(layerOne);
-			numLayer1Nodes = layerOne.size();
 		}
 		
 		
-		// All Other Layers:
-		for (int i = 1; i < networkMap.getMap().size(); i++) {
-			
-			List<Float> layerX = new ArrayList<>();
-			float sum = -1;
-			numPrevLayerNodes = layers.get(i-1).size();
-			numCurrentLayerNodes = networkMap.getNodesByLayer(i);
-			
-			for (int j = 0; j < numCurrentLayerNodes; j++) {
-				
-				sum = 0;
-				
-				for (int k = 0; k < numPrevLayerNodes; k++) {
-					sum += (float)(layers.get(i-1).get(k) * agent.getWeightings().get(dataIndex));
-					dataIndex++;
+		if (!networkMap.getIsCustomRouting()) {
+
+			// All Other Layers:
+			for (int i = 1; i < networkMap.getMap().size(); i++) {
+
+				List<Float> layerX = new ArrayList<>();
+				float sum = -1;
+				numPrevLayerNodes = layers.get(i-1).size();
+				numCurrentLayerNodes = networkMap.getNodesByLayer(i);
+
+				for (int j = 0; j < numCurrentLayerNodes; j++) {
+
+					sum = 0;
+
+					for (int k = 0; k < numPrevLayerNodes; k++) {
+						sum += (float)(layers.get(i-1).get(k) * agent.getWeightings().get(dataIndex));
+						dataIndex++;
+					}
+
+					layerX.add(fireNode(sum, numPrevLayerNodes));
+
+
 				}
-				
-				layerX.add(fireNode(sum, numPrevLayerNodes));
-				
-				
+
+				layers.add(layerX);
+
 			}
+
+			if (dataIndex != agent.getWeightings().size()) { erH.passError(ErrorCodes.DATA_INDEX_NOT_EQUAL_TO_AGENT);}
+
+			return layers.get(layers.size()-1);
+		}else {
+			// Custom Routing of Nodes
 			
-			layers.add(layerX);
+			
+			
+			
+			
 			
 		}
-		
-		if (dataIndex != agent.getWeightings().size()) { erH.passError(ErrorCodes.DATA_INDEX_NOT_EQUAL_TO_AGENT);}
-		
-		return layers.get(layers.size()-1);
 	}
 	
 	

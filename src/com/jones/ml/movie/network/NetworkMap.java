@@ -14,7 +14,7 @@ public class NetworkMap {
 	private List<Integer> firstLayerMap = new ArrayList();
 	
 	private boolean customRouting = false;
-	private List<List<Integer>> customRoutingMap = new ArrayList<>();
+	private List<List<List<Integer>>> customRoutingMap = new ArrayList<>();
 	
 	public NetworkMap(List<Integer> nodes, boolean isFirstLayer1to1, List<Integer> firstLayerMap) {
 		this.isFirstLayer1to1 = isFirstLayer1to1;
@@ -32,7 +32,7 @@ public class NetworkMap {
 		this.customRoutingMap = null;
 	}
 	
-	public NetworkMap(List<Integer> nodeMap, boolean isFirstLayer1to1, List<Integer> firstLayerMap, boolean customRouting, List<List<Integer>> routingMap) {
+	public NetworkMap(List<Integer> nodeMap, boolean isFirstLayer1to1, List<Integer> firstLayerMap, boolean customRouting, List<List<List<Integer>>> routingMap) {
 		this.nodes = nodeMap;
 		this.isFirstLayer1to1 = isFirstLayer1to1;
 		this.firstLayerMap = firstLayerMap;
@@ -63,7 +63,7 @@ public class NetworkMap {
 		return customRouting;
 	}
 	
-	public List<List<Integer>> getRoutingMap(){
+	public List<List<List<Integer>>> getRoutingMap(){
 		return customRoutingMap;
 	}
 	

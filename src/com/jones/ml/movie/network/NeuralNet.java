@@ -71,19 +71,19 @@ public class NeuralNet {
 		if (!networkMap.getIsCustomRouting()) {
 
 			// All Other Layers:
-			for (int i = 1; i < networkMap.getMap().size(); i++) {
+			for (int cLayer = 1; cLayer < networkMap.getMap().size(); cLayer++) {
 
 				List<Float> layerX = new ArrayList<>();
 				float sum = -1;
-				numPrevLayerNodes = layers.get(i-1).size();
-				numCurrentLayerNodes = networkMap.getNodesByLayer(i);
+				numPrevLayerNodes = layers.get(cLayer-1).size();
+				numCurrentLayerNodes = networkMap.getNodesByLayer(cLayer);
 
-				for (int j = 0; j < numCurrentLayerNodes; j++) {
+				for (int cNode = 0; cNode < numCurrentLayerNodes; cNode++) {
 
 					sum = 0;
 
 					for (int k = 0; k < numPrevLayerNodes; k++) {
-						sum += (float)(layers.get(i-1).get(k) * agent.getWeightings().get(dataIndex));
+						sum += (float)(layers.get(cLayer-1).get(k) * agent.getWeightings().get(dataIndex));
 						dataIndex++;
 					}
 
@@ -100,9 +100,38 @@ public class NeuralNet {
 
 			return layers.get(layers.size()-1);
 		}else {
+			
 			// Custom Routing of Nodes
 			
-			
+			for (int cLayer = 1; cLayer < networkMap.getMap().size(); cLayer++) {
+
+				List<Float> layerX = new ArrayList<>();
+				float sum = -1;
+				numPrevLayerNodes = layers.get(cLayer-1).size();
+				numCurrentLayerNodes = networkMap.getNodesByLayer(cLayer);
+
+				
+				
+				for (int cNode = 0; cNode < numCurrentLayerNodes; cNode++) {
+					
+					List<Integer> currentNodeRouteMap = new ArrayList<>();
+					
+					currentNodeRouteMap = networkMap.getRoutingMap().get(cLayer).get(cNode);
+					
+					for (int node: currentNodeRouteMap) {
+						
+						sum += (float)(layers.get(cLayer-1).get(node) * agent.getWeightings().get(dataIndex));
+						dataIndex++;
+						
+					}
+					
+					layerX.add(fireNode(sum,currentNodeRouteMap.size()));
+					
+				}
+				
+				layers.add(layerX);		
+
+			}
 			
 			
 			

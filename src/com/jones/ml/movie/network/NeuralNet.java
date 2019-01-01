@@ -15,11 +15,13 @@ public class NeuralNet {
 	
 	ErrorHandler erH = new ErrorHandler();
 
-	public float runThroughNetworkOnce(Agent agent, List<Float>data, NetworkMap networkMap) {
+	public List<Float> runThroughNetworkOnce(Agent agent, List<Float>data, NetworkMap networkMap) {
 		
 		List<List<Float>> layers = new ArrayList<>();
 		int numLayer1Nodes = -1;
+		int numCurrentLayerNodes = -1;
 		int numPrevLayerNodes = -1;
+		int dataIndex = 0;
 		
 		// First Layer Handling
 		if (networkMap.getIsFirstLayer1to1()) {
@@ -33,6 +35,7 @@ public class NeuralNet {
 			
 			for (int i = 0; i<data.size(); i++) {
 				layerOne.add((float)(data.get(i) * agent.getWeightings().get(i)));
+				dataIndex = i;
 			}
 			
 			layers.add(layerOne);
@@ -54,7 +57,6 @@ public class NeuralNet {
 				erH.passError(ErrorCodes.INSUF_DATA_LAYER_1);
 			}
 			
-			int dataIndex = 0;
 			float sum = -1;
 			for (int node : firstLayer) {
 				sum = 0;
@@ -72,9 +74,27 @@ public class NeuralNet {
 		// All Other Layers:
 		for (int i = 1; i < networkMap.getMap().size(); i++) {
 			
+			List<Float> layerX = new ArrayList<>();
+			float sum = 0;
+			numPrevLayerNodes = layers.get(i-1).size();
+			numCurrentLayerNodes = networkMap.getNodesByLayer(i);
+			
+			for (int j = 0; j < numCurrentLayerNodes; j++) {
+				
+				for (int k = 0; k < numPrevLayerNodes; k++) {
+					sum += (float)(layers.get(i-1).get(k) * agent.getWeightings().get(dataIndex));
+					dataIndex++;
+				}
+				
+				layerX.add(fireNode(sum, numPrevLayerNodes));
+				
+			}
+			
+			layers.add(layerX);
+			
 		}
 		
-		return 0.0f;
+		return layers.get(layers.size()-1);
 	}
 	
 	

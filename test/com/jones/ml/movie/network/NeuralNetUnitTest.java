@@ -18,7 +18,7 @@ import junit.framework.TestCase;
  *
  */
 class NeuralNetUnitTest extends TestCase {
-
+	
 	NeuralNet nn = new NeuralNet();
 	NetworkMap nm;
 	int numLayer1Nodes = 3;

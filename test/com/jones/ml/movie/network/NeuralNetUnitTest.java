@@ -22,12 +22,15 @@ class NeuralNetUnitTest extends TestCase {
 	NeuralNet nn = new NeuralNet();
 	NetworkMap nm;
 	int numLayer1Nodes = 3;
+	int numLayer2Nodes = 1;
+	int numWeightings = -1;
 	
 	@Before
 	@Override
 	public void setUp() {
 		List<Integer> map = new ArrayList<>();
 		map.add(numLayer1Nodes);
+		map.add(numLayer2Nodes);
 		nm = new NetworkMap(map);
 	}
 	
@@ -35,8 +38,14 @@ class NeuralNetUnitTest extends TestCase {
 	void testRunThroughNetworkOnce1to1() {
 		
 		List<Float> data = new ArrayList<>();
+		int numWeightings = 0;
+		
+		
 		for (float i = 0.0f; i<numLayer1Nodes; i++) {
 			data.add(i);
+		}
+		for (float i = 0.0f; i<numWeightings; i++) {
+			
 		}
 		
 		Agent agent = new Agent(numLayer1Nodes); 

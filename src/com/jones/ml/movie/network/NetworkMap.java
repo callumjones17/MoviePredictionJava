@@ -46,6 +46,8 @@ public class NetworkMap {
 		
 		if (!this.isFirstLayer1to1 & !this.customRouting) {
 			
+			weCount = this.getNodesByLayer(0);
+			
 			for (int layer = 1; layer < this.getMap().size(); layer++) {
 				
 				weCount += this.getNodesByLayer(layer-1) * this.getNodesByLayer(layer);

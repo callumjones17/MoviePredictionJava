@@ -30,11 +30,13 @@ class NetworkMapUnitTest extends TestCase {
 	
 	@Test
 	void testNetworkMap() {
+		
 		assertEquals(1,1);
 	}
 
 	@Test
 	void testGetNodesByLayer() {
+		
 		assertEquals(1,1);
 	}
 	

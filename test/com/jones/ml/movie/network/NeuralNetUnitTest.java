@@ -20,6 +20,8 @@ import junit.framework.TestCase;
 class NeuralNetUnitTest extends TestCase {
 	
 	NeuralNet nn = new NeuralNet();
+	List<Integer> map = new ArrayList<>();
+	private Random random = new Random();
 	NetworkMap nm;
 	Agent agent;
 	int numLayer1Nodes = 3;
@@ -29,46 +31,60 @@ class NeuralNetUnitTest extends TestCase {
 	@Before
 	@Override
 	public void setUp() {
-		List<Integer> map = new ArrayList<>();
-		map.add(numLayer1Nodes);
-		map.add(numLayer2Nodes);
-		nm = new NetworkMap(map);
 	}
 	
 	@Test
 	void testRunThroughNetworkOnce1to1() {
 		
-		List<Float> data = new ArrayList<>();
-		
-		int numWeightings = 0;
-		
+		System.out.println("Testing Run Through Once");
+		List<Float> data = new ArrayList<>();		
 		
 		for (float i = 0.0f; i<numLayer1Nodes; i++) {
-			data.add(i);
+			data.add(random.nextFloat());
 		}
-		for (float i = 0.0f; i<numWeightings; i++) {
-			
+		map.add(3);
+		map.add(5);
+		map.add(1);
+		nm = new NetworkMap(map);
+		numWeightings = nm.calculateNumberOfWeightingsRequired();
+		Agent agent = new Agent(numWeightings, true, 0.8f, 1.3f); 
+		
+		//System.out.println(agent.getWeightings());
+		//System.out.println(agent.getNumWeightings());
+		List<List<Float>> layers = nn.runThroughNetworkOnce(agent, data, nm);
+		
+		System.out.println("End of Testing Run Through Once");
+		for (List<Float> layer: layers) {
+			System.out.println(layer);
 		}
-		
-		Agent agent = new Agent(numLayer1Nodes); 
-		
-		nn.runThroughNetworkOnce(agent, data, nm);
 	}
 	
 	@Test
 	void testFireNode() {
 		
-		float value = -1;
+		/*float value = -1;
 		boolean result = false;
 		
 		value = nn.fireNode(5, 6);
-		if (value <= 1 & value >= 0 ) {result = true; assertEquals(true,result); result = false;}
+		if (value <= 1 & value > 0 ) {result = true; assertEquals(true,result); result = false;}
 		
 		value = nn.fireNode(6, 6);
-		if (value <= 1 & value >= 0 ) {result = true; assertEquals(true,result); result = false;}
+		if (value <= 1 & value > 0 ) {result = true; assertEquals(true,result); result = false;}
 		
 		value = nn.fireNode(1, 6);
-		if (value <= 1 & value >= 0 ) {result = true; assertEquals(true,result); result = false;}
+		if (value <= 1 & value > 0 ) {result = true; assertEquals(true,result); result = false;}
+		
+		value = nn.fireNode(0.6f, 6);
+		if (value <= 1 & value > 0.1f ) {result = true; assertEquals(true,result); result = false;}
+		//System.out.println(value);
+		
+		value = nn.fireNode(0.2f, 3);
+		if (value <= 1 & value > 0 ) {result = true; assertEquals(true,result); result = false;}
+		
+		value = nn.fireNode(0.2810223f, 3.0f);
+		//System.out.print("Testing Fire Node: ");
+		//System.out.println(value);b
+*/
 	}
 
 }

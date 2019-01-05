@@ -15,7 +15,7 @@ public class NeuralNet {
 	
 	ErrorHandler erH = new ErrorHandler();
 
-	public List<Float> runThroughNetworkOnce(Agent agent, List<Float>data, NetworkMap networkMap) {
+	public List<List<Float>> runThroughNetworkOnce(Agent agent, List<Float>data, NetworkMap networkMap) {
 		
 		List<List<Float>> layers = new ArrayList<>();
 		int numCurrentLayerNodes = -1;
@@ -89,16 +89,16 @@ public class NeuralNet {
 
 					layerX.add(fireNode(sum, numPrevLayerNodes));
 
-
 				}
-
+				
 				layers.add(layerX);
 
 			}
 
-			if (dataIndex != agent.getWeightings().size()) { erH.passError(ErrorCodes.DATA_INDEX_NOT_EQUAL_TO_AGENT);}
+			if (dataIndex+1 != agent.getWeightings().size()) { System.out.println(dataIndex); erH.passError(ErrorCodes.DATA_INDEX_NOT_EQUAL_TO_AGENT);}
 
-			return layers.get(layers.size()-1);
+			//return layers.get(layers.size()-1);
+			return layers;
 		}else {
 			
 			if (networkMap.getMap().size() != networkMap.getRoutingMap().size()-1) { erH.passError(ErrorCodes.CUSTOM_ROUTES_NOT_EQUAL_TO_NUM_LAYERS);}
@@ -128,7 +128,6 @@ public class NeuralNet {
 					}
 					
 					layerX.add(fireNode(sum,currentNodeRouteMap.size()));
-					
 				}
 				
 				layers.add(layerX);		
@@ -136,13 +135,49 @@ public class NeuralNet {
 			}			
 		}
 		
-		if (dataIndex != agent.getWeightings().size()) { erH.passError(ErrorCodes.DATA_INDEX_NOT_EQUAL_TO_AGENT);}
-		return layers.get(layers.size()-1);
+		if (dataIndex+1 != agent.getWeightings().size()) { erH.passError(ErrorCodes.DATA_INDEX_NOT_EQUAL_TO_AGENT);}
+		//return layers.get(layers.size()-1);
+		return layers;
 	}
 	
 	
 	public float fireNode(float sum, float numInputs) {
-		float output = (float)((1/2)*(Math.tanh(((float)(1/(numInputs/4)))*(sum-((float)(numInputs/2))))+1));
+		
+		System.out.println("Fire Node Starting");
+		
+		System.out.println(sum);
+		System.out.println(numInputs);
+		
+		// Old
+		//float output = (float)((1/2)*(Math.tanh(((float)(1/(numInputs/4)))*(sum-((float)(numInputs/2))))+1));
+		
+		//Fixed 
+		//float output = (float)((1.0f/2.0f)*(Math.tanh(((float)(1/(numInputs/4)))*(sum-((float)(numInputs/2))))+1));
+		
+		// Adjusted
+		float output = (float)((1.0f/2.0f)*(Math.tanh(((float)(1/(numInputs/4)))*(sum-((float)(numInputs/2))))+1));
+		
+		
+		/*float output = (float)(numInputs/4);
+		System.out.println(output);
+		output = 1/output;
+		System.out.println(output);
+		float half = (float)(numInputs/2);
+		System.out.println(half);
+		half = sum - half;
+		System.out.println(half);
+		output = output * half;
+		System.out.println(output);
+		output = (float)Math.tanh((double)output);
+		System.out.println(output);
+		output = output + 1;
+		System.out.println(output);
+		half = (float)(1.0f/2.0f);
+		System.out.println(half);
+		output = half * output;
+		System.out.println(output);
+		System.out.println("Fire Node Done");*/
+		
 		return output;
 	}
 	

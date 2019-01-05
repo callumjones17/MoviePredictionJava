@@ -31,6 +31,21 @@ public class Agent {
 		}
 	}
 	
+	public Agent(int numWeightings, boolean limit, float max, float min) {
+		this.numWeightings = numWeightings;
+		if (!limit) {
+			for (int i = 0; i < numWeightings; i++) {
+				this.weightings.add(random.nextFloat());
+			}
+		}else {
+			for (int i = 0; i < numWeightings; i++) {
+				this.weightings.add(((max-min)*random.nextFloat())+min);
+			}
+		}
+		
+	}
+	
+	
 	// Should only really be used for debugging
 	public Agent(List<Float> weights) {
 		this.numWeightings = weights.size();

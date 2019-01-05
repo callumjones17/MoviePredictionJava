@@ -14,6 +14,15 @@ import com.jones.ml.error.*;
 public class NeuralNet {
 	
 	ErrorHandler erH = new ErrorHandler();
+	private boolean scaled = false;
+
+	public NeuralNet() {
+		this.scaled = false;
+	}
+	public NeuralNet(boolean scaled) {
+		this.scaled = scaled;
+	}
+
 
 	public List<List<Float>> runThroughNetworkOnce(Agent agent, List<Float>data, NetworkMap networkMap) {
 		
@@ -178,8 +187,30 @@ public class NeuralNet {
 		System.out.println(output);
 		System.out.println("Fire Node Done");*/
 		
+		if (scaled) {
+			output = scaleResult(output);
+		}
+		
 		return output;
 	}
+	
+	public float scaleResult(float input) {
+		
+		float output = -1;
+		
+		output = 0.4f * (float)Math.exp((double)(-3*input));
+		
+		return output;
+	}
+	
+	public boolean isScaled() {
+		return scaled;
+	}
+
+	public void setScalde(boolean scaled) {
+		this.scaled = scaled;
+	}
+	
 	
 	
 	

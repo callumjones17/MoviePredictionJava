@@ -36,6 +36,8 @@ class NeuralNetUnitTest extends TestCase {
 	@Test
 	void testRunThroughNetworkOnce1to1() {
 		
+		nn = new NeuralNet(false);
+		
 		System.out.println("Testing Run Through Once");
 		List<Float> data = new ArrayList<>();		
 		
@@ -44,10 +46,13 @@ class NeuralNetUnitTest extends TestCase {
 		}
 		map.add(3);
 		map.add(5);
+		map.add(8);
+		map.add(5);
+		map.add(3);
 		map.add(1);
 		nm = new NetworkMap(map);
 		numWeightings = nm.calculateNumberOfWeightingsRequired();
-		Agent agent = new Agent(numWeightings, true, 0.8f, 1.3f); 
+		Agent agent = new Agent(numWeightings, true, 0.5f, 1f); 
 		
 		//System.out.println(agent.getWeightings());
 		//System.out.println(agent.getNumWeightings());

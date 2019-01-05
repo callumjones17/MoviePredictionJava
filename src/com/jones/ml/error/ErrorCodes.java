@@ -18,7 +18,10 @@ public enum ErrorCodes {
 	INSUF_DATA_LAYER_1("Not Enough Data to fill First Layer",200),
 	NOT_ENOUGH_WEIGHTINGS("Not Enough Weights for the network Configured!",201),
 	DATA_INDEX_NOT_EQUAL_TO_AGENT("Data Index is not the same size as the Agent Weightings",202),
-	CUSTOM_ROUTES_NOT_EQUAL_TO_NUM_LAYERS("Number Layers is different to the Custom Route Map",203);
+	CUSTOM_ROUTES_NOT_EQUAL_TO_NUM_LAYERS("Number Layers is different to the Custom Route Map",203),
+	
+	// Issues with Network Map are between 300 and 400
+	INVALID_MAP_CONFIG("Invalid mapping configuration, please check it!",300);
 	
 	private String desc;
 	private int code;

@@ -15,6 +15,8 @@ class NetworkMapUnitTest extends TestCase {
 	
 	NeuralNet nn = new NeuralNet();
 	List<Integer> map = new ArrayList<>();
+	List<Integer> firstLayer = new ArrayList<>();
+	List<List<List<Integer>>> routeMap = new ArrayList<>();
 	
 	NetworkMap nm;
 	int numLayer1Nodes = 3;
@@ -50,6 +52,83 @@ class NetworkMapUnitTest extends TestCase {
 		System.out.println(numWeightings);
 		assertEquals(6, numWeightings);
 		
+		map = new ArrayList<>();
+		map.add(3);
+		map.add(1);
+		firstLayer.add(1);
+		firstLayer.add(3);
+		firstLayer.add(1);
+		nm = new NetworkMap(map, false, firstLayer);
+		//System.out.println(nm.getFirstLayerMap());
+		numWeightings = nm.calculateNumberOfWeightingsRequired();
+		System.out.println(numWeightings);
+		assertEquals(8, numWeightings);
+		
+		
+		
+		map = new ArrayList<>();
+		map.add(3);
+		map.add(2);
+		map.add(1);
+		firstLayer = null;
+		
+		List<Integer> nodeIndex = new ArrayList<>();
+		List<List<Integer>> layerIndex = new ArrayList<>();
+		nodeIndex.add(0);
+		nodeIndex.add(1);
+		layerIndex.add(nodeIndex);
+		nodeIndex = new ArrayList<>();
+		nodeIndex.add(2);
+		layerIndex.add(nodeIndex);
+		routeMap.add(layerIndex);
+		
+		layerIndex = new ArrayList<>();
+		nodeIndex = new ArrayList<>();
+		nodeIndex.add(0);
+		nodeIndex.add(1);
+		layerIndex.add(nodeIndex);
+		routeMap.add(layerIndex);
+		
+		nm = new NetworkMap(map,true, firstLayer, true, routeMap);
+		
+		numWeightings = nm.calculateNumberOfWeightingsRequired();
+		System.out.println(numWeightings);
+		assertEquals(8, numWeightings);
+		
+		
+		
+		
+		map = new ArrayList<>();
+		map.add(3);
+		map.add(2);
+		map.add(1);
+		firstLayer = new ArrayList<>();
+		firstLayer.add(1);
+		firstLayer.add(3);
+		firstLayer.add(1);
+		
+		nodeIndex = new ArrayList<>();
+		layerIndex = new ArrayList<>();
+		nodeIndex.add(0);
+		nodeIndex.add(1);
+		layerIndex.add(nodeIndex);
+		nodeIndex = new ArrayList<>();
+		nodeIndex.add(2);
+		layerIndex.add(nodeIndex);
+		routeMap.add(layerIndex);
+		
+		layerIndex = new ArrayList<>();
+		nodeIndex = new ArrayList<>();
+		nodeIndex.add(0);
+		nodeIndex.add(1);
+		layerIndex.add(nodeIndex);
+		routeMap.add(layerIndex);
+		
+		nm = new NetworkMap(map,false, firstLayer, true, routeMap);
+		
+		numWeightings = nm.calculateNumberOfWeightingsRequired();
+		System.out.println(numWeightings);
+		assertEquals(10, numWeightings);
 	}
 
 }

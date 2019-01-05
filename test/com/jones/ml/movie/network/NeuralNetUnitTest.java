@@ -21,6 +21,7 @@ class NeuralNetUnitTest extends TestCase {
 	
 	NeuralNet nn = new NeuralNet();
 	NetworkMap nm;
+	Agent agent;
 	int numLayer1Nodes = 3;
 	int numLayer2Nodes = 1;
 	int numWeightings = -1;
@@ -38,6 +39,7 @@ class NeuralNetUnitTest extends TestCase {
 	void testRunThroughNetworkOnce1to1() {
 		
 		List<Float> data = new ArrayList<>();
+		
 		int numWeightings = 0;
 		
 		

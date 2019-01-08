@@ -21,7 +21,11 @@ public enum ErrorCodes {
 	CUSTOM_ROUTES_NOT_EQUAL_TO_NUM_LAYERS("Number Layers is different to the Custom Route Map",203),
 	
 	// Issues with Network Map are between 300 and 400
-	INVALID_MAP_CONFIG("Invalid mapping configuration, please check it!",300);
+	INVALID_MAP_CONFIG("Invalid mapping configuration, please check it!",300),
+	
+	// Issues with Data Mapper are between 400 and 500
+	DATA_GREATER_THAN_MAX("Input Data Exceeds Maximum Range", 400),
+	DATA_LESS_THAN_ZERO("Input Data cannot be less than Zero",401);
 	
 	private String desc;
 	private int code;

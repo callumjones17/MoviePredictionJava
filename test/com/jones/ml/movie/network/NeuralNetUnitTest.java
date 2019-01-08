@@ -36,13 +36,17 @@ class NeuralNetUnitTest extends TestCase {
 	@Test
 	void testRunThroughNetworkOnce1to1() {
 		
-		nn = new NeuralNet(false);
+		nn = new NeuralNet();
 		
 		System.out.println("Testing Run Through Once");
 		List<Float> data = new ArrayList<>();		
 		
+		long millis = System.currentTimeMillis() % 1000;
+		random.setSeed(millis);
+		
+		
 		for (float i = 0.0f; i<numLayer1Nodes; i++) {
-			data.add(random.nextFloat());
+			data.add((random.nextFloat()*2.0f)-1.0f);
 		}
 		map.add(3);
 		map.add(5);
@@ -52,7 +56,10 @@ class NeuralNetUnitTest extends TestCase {
 		map.add(1);
 		nm = new NetworkMap(map);
 		numWeightings = nm.calculateNumberOfWeightingsRequired();
-		Agent agent = new Agent(numWeightings, true, 0.5f, 1f); 
+		Agent agent = new Agent(numWeightings,true); 
+		Agent agentB = new Agent(numWeightings,true);
+		System.out.println(agent.getWeightings());
+		System.out.println(agentB.getWeightings());
 		
 		//System.out.println(agent.getWeightings());
 		//System.out.println(agent.getNumWeightings());
@@ -60,6 +67,13 @@ class NeuralNetUnitTest extends TestCase {
 		
 		System.out.println("End of Testing Run Through Once");
 		for (List<Float> layer: layers) {
+			System.out.println(layer);
+		}
+		
+		List<List<Float>> layersB = nn.runThroughNetworkOnce(agentB, data, nm);
+		
+		System.out.println("End of Testing Run Through Once");
+		for (List<Float> layer: layersB) {
 			System.out.println(layer);
 		}
 	}

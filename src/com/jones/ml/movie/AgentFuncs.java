@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * @author Callum Jones
+ * @author Callum Jones, 2018
  *
  */
 public class AgentFuncs {
@@ -20,6 +20,7 @@ public class AgentFuncs {
 		this.map = map;
 	}
 	
+	//Deprecated!!!! PLEASE DO NOT USE THIS
 	public Agent createAgent() {
 		// First determine how many layers are in the network (number of elements in the array)
 		// Next next, add first element to the sum of the next element by the element after
@@ -43,6 +44,7 @@ public class AgentFuncs {
 		//System.out.println(weightSum);
 		return new Agent(weightSum, map);
 	}
+	
 	
 	public List<Agent> createManyAgents(int number) {
 		List<Agent> agentList = new ArrayList<>();

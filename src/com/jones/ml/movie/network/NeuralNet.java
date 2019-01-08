@@ -15,14 +15,23 @@ public class NeuralNet {
 	
 	ErrorHandler erH = new ErrorHandler();
 	private boolean scaled = false;
+	private boolean passData = true;
+	private float fireFactor = -1.0f;
 
 	public NeuralNet() {
 		this.scaled = false;
+		this.passData = true;
 	}
-	public NeuralNet(boolean scaled) {
+	public NeuralNet(boolean scaled, boolean passData, float fireFactor) {
 		this.scaled = scaled;
+		this.passData = passData;
+		this.fireFactor = fireFactor;
 	}
-
+	public NeuralNet(boolean passData, float fireFactor) {
+		this.scaled = false;
+		this.passData = passData;
+		this.fireFactor = fireFactor;
+	}
 
 	public List<List<Float>> runThroughNetworkOnce(Agent agent, List<Float>data, NetworkMap networkMap) {
 		
@@ -35,6 +44,7 @@ public class NeuralNet {
 		if (networkMap.getIsFirstLayer1to1()) {
 			
 			List<Float> layerOne = new ArrayList<>();
+			float nodeResult = -1;
 			
 			// Check there is enough data to pass in the first layer:
 			if (data.size() != networkMap.getNodesByLayer(0)){
@@ -42,16 +52,30 @@ public class NeuralNet {
 			}
 			
 			for (int i = 0; i<data.size(); i++) {
-				layerOne.add((float)(data.get(i) * agent.getWeightings().get(i)));
+				
+				nodeResult = (float)(data.get(i) * agent.getWeightings().get(i));
+				
+				if (passData) {
+					layerOne.add(nodeResult);
+				}else {
+					if (nodeResult >= fireFactor) {
+						layerOne.add(1.0f);
+					}
+					else {
+						layerOne.add(0.0f);
+					}
+				}
+					
 				dataIndex = i;
 			}
-			
+
 			layers.add(layerOne);
 			
 		}else {
 			
 			List<Integer> firstLayer = new ArrayList<>();
 			List<Float> layerOne = new ArrayList<>();
+			float nodeResult = -1;
 			int numTotalNodesFirstLayer = 0;
 			
 			firstLayer = networkMap.getFirstLayerMap();
@@ -71,7 +95,18 @@ public class NeuralNet {
 					sum += (float)(agent.getWeightings().get(i) * data.get(dataIndex));
 				}
 				dataIndex += node;
-				layerOne.add(fireNode(sum,node));
+				nodeResult = fireNode(sum,node);
+				
+				if (passData) {
+					layerOne.add(nodeResult);
+				}else {
+					if (nodeResult >= fireFactor) {
+						layerOne.add(1.0f);
+					}
+					else {
+						layerOne.add(0.0f);
+					}
+				}
 			}
 			layers.add(layerOne);
 		}
@@ -86,6 +121,7 @@ public class NeuralNet {
 				float sum = -1;
 				numPrevLayerNodes = layers.get(cLayer-1).size();
 				numCurrentLayerNodes = networkMap.getNodesByLayer(cLayer);
+				float nodeResult = -1;
 
 				for (int cNode = 0; cNode < numCurrentLayerNodes; cNode++) {
 
@@ -95,8 +131,20 @@ public class NeuralNet {
 						sum += (float)(layers.get(cLayer-1).get(k) * agent.getWeightings().get(dataIndex));
 						dataIndex++;
 					}
-
-					layerX.add(fireNode(sum, numPrevLayerNodes));
+					
+					nodeResult = fireNode(sum, numPrevLayerNodes);
+					
+					if (passData) {
+						layerX.add(nodeResult);
+					}else {
+						if (nodeResult >= fireFactor) {
+							layerX.add(1.0f);
+						}
+						else {
+							layerX.add(0.0f);
+						}
+					}
+					
 
 				}
 				
@@ -118,6 +166,7 @@ public class NeuralNet {
 
 				List<Float> layerX = new ArrayList<>();
 				float sum = -1;
+				float nodeResult = -1;
 				numPrevLayerNodes = layers.get(cLayer-1).size();
 				numCurrentLayerNodes = networkMap.getNodesByLayer(cLayer);
 
@@ -136,7 +185,18 @@ public class NeuralNet {
 						
 					}
 					
-					layerX.add(fireNode(sum,currentNodeRouteMap.size()));
+					nodeResult = fireNode(sum,currentNodeRouteMap.size());
+					
+					if (passData) {
+						layerX.add(nodeResult);
+					}else {
+						if (nodeResult >= fireFactor) {
+							layerX.add(1.0f);
+						}
+						else {
+							layerX.add(0.0f);
+						}
+					}
 				}
 				
 				layers.add(layerX);		
@@ -148,14 +208,14 @@ public class NeuralNet {
 		//return layers.get(layers.size()-1);
 		return layers;
 	}
-	
+		
 	
 	public float fireNode(float sum, float numInputs) {
 		
-		System.out.println("Fire Node Starting");
+		//System.out.println("Fire Node Starting");
 		
-		System.out.println(sum);
-		System.out.println(numInputs);
+		//System.out.println(sum);
+		//System.out.println(numInputs);
 		
 		// Old
 		//float output = (float)((1/2)*(Math.tanh(((float)(1/(numInputs/4)))*(sum-((float)(numInputs/2))))+1));
@@ -164,7 +224,9 @@ public class NeuralNet {
 		//float output = (float)((1.0f/2.0f)*(Math.tanh(((float)(1/(numInputs/4)))*(sum-((float)(numInputs/2))))+1));
 		
 		// Adjusted
-		float output = (float)((1.0f/2.0f)*(Math.tanh(((float)(1/(numInputs/4)))*(sum-((float)(numInputs/2))))+1));
+		//float output = (float)((1.0f/2.0f)*(Math.tanh(((float)(1/(numInputs/4)))*(sum-((float)(numInputs/2))))+1));
+		
+		float output = sigmoid(sum);
 		
 		
 		/*float output = (float)(numInputs/4);
@@ -194,11 +256,19 @@ public class NeuralNet {
 		return output;
 	}
 	
+	
+	public float sigmoid(float input) {
+	    return (float)(1/( 1 + Math.pow(Math.E,(-1*(double)(input)))));
+	}
+	
+	
+	
 	public float scaleResult(float input) {
 		
 		float output = -1;
 		
-		output = 0.4f * (float)Math.exp((double)(-3*input));
+		//output = 0.4f * (float)Math.exp((double)(-3*input));
+		output = 1-input;
 		
 		return output;
 	}

@@ -28,11 +28,27 @@ public class DataMapper {
 		float scaled = -2;
 		if (neg) {
 			float perc = (float)data/(float)max;
-			if (perc < 0.5) {
-				scaled = (1.0f-perc)*(float)max;
-			}
+			scaled = (perc*2.0f)-1.0f;
 		}else {
 			scaled = (float)data/(float)max;
+		}
+		
+		return scaled;
+	}
+	
+	
+	public float mapFloat(float data, float max) {
+		
+		// Error Handling
+		if (data < 0) {erH.passError(ErrorCodes.DATA_LESS_THAN_ZERO,"Data: " + data);}
+		else if (data > max) { erH.passError(ErrorCodes.DATA_GREATER_THAN_MAX, "Data: " + data + " Max: " + max);}
+		
+		float scaled = -2;
+		if (neg) {
+			float perc = data/max;
+			scaled = (perc*2.0f)-1.0f;
+		}else {
+			scaled = data/max;
 		}
 		
 		return scaled;

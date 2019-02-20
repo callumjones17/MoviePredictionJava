@@ -17,8 +17,10 @@ public class ExcelDataHandler {
 
 	
 	private String filename = "trainingData.xls";
-	public int test = 1;
+	private int lineLen = -1;
+	private int numLines = -1;
 	
+
 	public ExcelDataHandler(String fileName) {
 		this.filename = fileName;
 	}
@@ -32,15 +34,18 @@ public class ExcelDataHandler {
 		try {
 			
 			FileReader fileReader = new FileReader(filename);
-			
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			numLines = 0;
 			
 			while((line = bufferedReader.readLine()) != null) {
 				System.out.println(line);
+				numLines++;
 				
 				lineData = new ArrayList<String>();
+				lineLen = 0;
 				for (String dataEntry: line.split(",")) {
 					lineData.add(dataEntry);
+					lineLen++;
 				}
 				data.add((ArrayList<String>) lineData);
 				
@@ -59,6 +64,14 @@ public class ExcelDataHandler {
 		
 		System.out.println(data.get(1).get(2));
 		
+	}
+	
+	public int getLineLen() {
+		return lineLen;
+	}
+
+	public int getNumLines() {
+		return numLines;
 	}
 	
 }

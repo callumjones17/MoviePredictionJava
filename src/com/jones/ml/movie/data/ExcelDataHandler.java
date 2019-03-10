@@ -74,4 +74,18 @@ public class ExcelDataHandler {
 		return numLines;
 	}
 	
+	
+	/*public void writeCSV(dataToWrite) {
+		
+		try {
+			
+			FileWriter fileWriter = new FileWriter(filename,false);
+			
+			
+		}catch (Exception e){
+			
+		}
+		
+	}*/
+	
 }
